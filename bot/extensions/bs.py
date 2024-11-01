@@ -22,4 +22,5 @@ class Echo(lightbulb.SlashCommand, name="bsky", description="posts to bsky"):
 
     @lightbulb.invoke
     async def invoke(self, ctx: lightbulb.Context) -> None:
-        await ctx.respond(bsclient.send_post(self.text))
+        bsclient.send_post(self.text)
+        await ctx.respond("Your post has been posted")
