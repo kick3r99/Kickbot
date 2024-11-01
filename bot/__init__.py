@@ -3,30 +3,25 @@ from dotenv import load_dotenv
 import lightbulb
 import os
 
+from bot import extensions
+
 #Key pathing
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(BASEDIR, '.env'))
 Key = os.getenv("API_KEY")
-#Hikari
+
+#Hikari __init__
 bot = hikari.GatewayBot(Key)
 
-#Lightbulb
+#Lightbulb __init__
 client = lightbulb.client_from_app(bot)
-bot.subscribe(hikari.StartingEvent, client.start)
 
-#Ping Command
-@client.register()
-class Ping(
-    # command types: SlashCommand, UserCommand, and MessageCommand
-    lightbulb.SlashCommand,
-    name="ping",
-    description="checks the bot is alive",
-):
-   
-    @lightbulb.invoke
-    async def invoke(self, ctx: lightbulb.Context) -> None:
-        await ctx.respond("Pong!")
+@bot.listen(hikari.StartingEvent)
+async def on_starting(_: hikari.StartingEvent) -> None:
+    # Load the commands
+    await client.load_extensions_from_package(extensions)
+    # Start the client - causing the commands to be synced with discord
+    await client.start()
 
 
 
-bot.run()
