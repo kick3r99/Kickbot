@@ -1,3 +1,5 @@
 This is a list of required libraries
 Hikari
 python-dotenv
+hikari-lightbulb
+OS

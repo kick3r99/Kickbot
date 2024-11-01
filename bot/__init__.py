@@ -17,13 +17,15 @@ bot.subscribe(hikari.StartingEvent, client.start)
 #Ping Command
 @client.register()
 class Ping(
+    # command types: SlashCommand, UserCommand, and MessageCommand
     lightbulb.SlashCommand,
-    name = "pingvalid",
-    description="sigma",
+    name="ping",
+    description="checks the bot is alive",
 ):
+   
     @lightbulb.invoke
     async def invoke(self, ctx: lightbulb.Context) -> None:
-        await ctx.repsond("PONG")
+        await ctx.respond("Pong!")
 
 
 
