@@ -1,6 +1,6 @@
 import os
 import re
-
+import bot
 import hikari
 import lightbulb
 import matplotlib.pyplot as plt
@@ -12,6 +12,7 @@ number_pattern = re.compile(r"^\d+( \d+)*$")
 # plot function to be called
 def plot(data1, data2):
     plt.clf()
+    plt.figure(figsize=(10, 16))
     plt.bar(data1, data2)
     plt.savefig('data/fig.png')
     return
@@ -40,9 +41,10 @@ class Plot(lightbulb.SlashCommand, name="plot", description="plot data using mat
             plot(data1_numbers, data2_numbers)
             plotimg = hikari.File("data/fig.png")
             # footer copied from old code
-            plotemb = hikari.Embed().set_image(plotimg).set_footer(
+            plotemb = hikari.Embed(timestamp=bot.time()).set_image(plotimg).set_footer(
                 text=f"Requested by {ctx.member.display_name}",
-                icon=ctx.member.avatar_url)
+                icon=ctx.member.avatar_url,
+                )
             await ctx.respond(plotemb)
         # error handling wow!
         except Exception as e:

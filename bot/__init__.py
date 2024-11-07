@@ -1,10 +1,13 @@
 import os
-
+import datetime
 import hikari
 import lightbulb
 from dotenv import load_dotenv
 from bot import extensions
-
+#date function for convenience's sake
+def time():
+    date = datetime.datetime.now().astimezone(datetime.timezone(datetime.timedelta(hours=-5)))
+    return date
 # Key pathing
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(BASEDIR, '.env'))
