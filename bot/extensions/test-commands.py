@@ -1,5 +1,5 @@
 import lightbulb
-
+import bot
 loader = lightbulb.Loader()
 
 
@@ -9,4 +9,4 @@ class Ping(lightbulb.SlashCommand, name="ping", description="Checks the bot is a
     
     @lightbulb.invoke
     async def invoke(self, ctx: lightbulb.Context) -> None:
-        await ctx.respond("Pong!")
+        await ctx.respond(ctx.user.mention)
