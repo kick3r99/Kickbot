@@ -3,6 +3,3 @@ use bot-env\Scripts\activate to open venv
 after use python -m bot
 I could probably make this into a .bat
 maybe later
-
-https://github.com/tandemdude/hikari-lightbulb-bot-template/tree/master/bot
-^Template link for reference
