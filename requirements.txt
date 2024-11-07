@@ -1,4 +1,5 @@
 hikari
 python-dotenv
 --pre hikari-lightbulb
-
+matplotlib
+atproto

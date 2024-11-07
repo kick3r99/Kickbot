@@ -2,7 +2,7 @@ import hikari
 from dotenv import load_dotenv
 import lightbulb
 import os
-
+import matplotlib as plt
 from bot import extensions
 
 #Key pathing

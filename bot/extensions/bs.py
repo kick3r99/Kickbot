@@ -17,7 +17,7 @@ bsclient.login(User, Pass)
 loader = lightbulb.Loader()
 
 @loader.command
-class Echo(lightbulb.SlashCommand, name="bsky", description="posts to bsky"):
+class Bsky(lightbulb.SlashCommand, name="bsky", description="posts to bsky"):
     text: str = lightbulb.string("text", "The text to post")
 
     @lightbulb.invoke
