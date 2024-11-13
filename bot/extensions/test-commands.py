@@ -1,5 +1,4 @@
 import lightbulb
-import bot
 loader = lightbulb.Loader()
 
 

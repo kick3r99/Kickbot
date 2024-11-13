@@ -1,5 +1,7 @@
-hikari
-python-dotenv
---pre hikari-lightbulb
-matplotlib
-atproto
+hikari==2.1.0
+python-dotenv==1.0.1
+hikari-lightbulb==3.0.0a14
+matplotlib==3.9.2
+atproto==0.0.55
+bs4==0.0.2
+requests==2.32.3
