@@ -3,7 +3,8 @@ from profanity_check import predict
 import lightbulb
 from atproto import Client
 from dotenv import load_dotenv
-
+import hikari
+import  bot
 # atproto is bsky api fyi
 # getting pass and user from .env
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
@@ -29,5 +30,16 @@ class Bsky(lightbulb.SlashCommand, name="bsky", description="posts to bsky"):
         if censor_bsky > 0.7:
             await ctx.respond("Please avoid Profanity")
         else:
-            bsclient.send_post(self.text)
-            await ctx.respond("Your post has been posted")
+            post = bsclient.send_post(self.text)
+            link = f'https://bsky.app/profile/botiusmaximus.bsky.social/post/{post.uri.split('/')[-1]}'
+            emb = (hikari.Embed(
+            timestamp=bot.time(),
+            url = link,
+            title=f"Your post has been posted.").
+            set_footer(
+            text=f"Requested by {ctx.member.display_name}",
+            icon=ctx.member.avatar_url,
+                )
+            )
+            await ctx.respond(emb)
+
