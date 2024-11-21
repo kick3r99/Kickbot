@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import bot
 import requests
 import hikari
-import os
+
 
 loader = lightbulb.Loader()
 
