@@ -6,6 +6,8 @@ import lightbulb
 from atproto import Client
 from dotenv import load_dotenv
 from profanity_check import predict
+import random
+from datetime import datetime
 
 import bot
 
@@ -93,4 +95,55 @@ class BskyFollow(lightbulb.SlashCommand, name="blueskyfollow", description="foll
             await ctx.respond("Rate Limited")
         except Exception as e:
             await ctx.respond(f"Unexpected error: {str(e)}")
+
+
+
+#bsky feed
+@loader.command
+class BskyFeed(lightbulb.SlashCommand, name="blueskyfeed", description="feed me cookie"):
+    @lightbulb.invoke
+    async def invoke(self, ctx: lightbulb.Context) -> None:
+        rng = random.randint(0, 50)
+        timeline = bsclient.get_timeline(algorithm='reverse-chronological')
+        feed_view = timeline.feed[rng]
+        action = '[New post]'
+        if feed_view.reason:
+            action_by = feed_view.reason.by.handle
+            action = f'Reposted by @{action_by}'
+        post = feed_view.post.record
+        authorfeed = feed_view.post.author
+
+
+
+        image_url = None
+        post_embed = getattr(post, "embed", None)
+        if post_embed:
+            if hasattr(post_embed, "images") and post_embed.images:
+                # Construct the image URL using the DID and content hash (CID)
+                image_url = f"https://cdn.bsky.app/img/feed_thumbnail/plain/{authorfeed.did}/{post_embed.images[0].image.ref.link}@jpeg"
+
+        raw_timestamp = post.created_at  # ISO 8601 string
+        formatted_timestamp = datetime.fromisoformat(raw_timestamp.replace("Z", "+00:00")).strftime(
+            "%b %d %Y at %I:%M %p")
+
+        feemb = (hikari.Embed(
+            title = action,
+            description=f"{post.text}",
+        )
+        .set_author(
+            name=authorfeed.handle,
+            url=f"https://bsky.app/profile/{authorfeed.handle}",
+            icon=authorfeed.avatar
+        )
+        .set_footer(
+            icon=ctx.member.avatar_url,
+            text=f'Posted on {formatted_timestamp}'
+        ))
+
+        # Only set image if a URL was found
+        if image_url:
+            feemb.set_image(image_url)
+
+
+        await ctx.respond(feemb)
 
