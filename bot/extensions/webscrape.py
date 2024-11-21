@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import bot
 import requests
 import hikari
-
+from profanity_check import predict
 
 loader = lightbulb.Loader()
 
@@ -23,11 +23,16 @@ def serch(search_term):
 @loader.command
 class Search(lightbulb.SlashCommand, name="imgsearch", description="imgsearch"):
     search_term = lightbulb.string("searchterm", "searchterm")
+
     @lightbulb.invoke
     async def invoke(self, ctx: lightbulb.Context) -> None:
-        img = serch(self.search_term)[1]
-        emb = hikari.Embed(timestamp=bot.time()).set_image(img).set_footer(
-            text=f"Requested by {ctx.member.display_name}",
-            icon=ctx.member.avatar_url,
-        )
-        await ctx.respond(emb)
+        filter_search_term = predict([self.search_term])
+        if filter_search_term > 0.7:
+            await ctx.respond("naughty naughty")
+        else:
+            img = serch(self.search_term)[1]
+            emb = hikari.Embed(timestamp=bot.time()).set_image(img).set_footer(
+                text=f"Requested by {ctx.member.display_name}",
+                icon=ctx.member.avatar_url,
+            )
+            await ctx.respond(emb)
