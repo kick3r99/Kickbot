@@ -25,5 +25,9 @@ class Search(lightbulb.SlashCommand, name="imgsearch", description="imgsearch"):
     search_term = lightbulb.string("searchterm", "searchterm")
     @lightbulb.invoke
     async def invoke(self, ctx: lightbulb.Context) -> None:
-        img = serch(self.search_term[1])
-        await ctx.respond(img)
+        img = serch(self.search_term)[1]
+        emb = hikari.Embed(timestamp=bot.time()).set_image(img).set_footer(
+            text=f"Requested by {ctx.member.display_name}",
+            icon=ctx.member.avatar_url,
+        )
+        await ctx.respond(emb)
