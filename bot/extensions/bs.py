@@ -1,5 +1,5 @@
 import os
-
+from profanity_check import predict
 import lightbulb
 from atproto import Client
 from dotenv import load_dotenv
@@ -25,5 +25,9 @@ class Bsky(lightbulb.SlashCommand, name="bsky", description="posts to bsky"):
 
     @lightbulb.invoke
     async def invoke(self, ctx: lightbulb.Context) -> None:
-        bsclient.send_post(self.text)
-        await ctx.respond("Your post has been posted")
+        censor_bsky = predict([self.text])
+        if censor_bsky > 0.7:
+            await ctx.respond("Please avoid Profanity")
+        else:
+            bsclient.send_post(self.text)
+            await ctx.respond("Your post has been posted")

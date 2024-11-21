@@ -28,7 +28,7 @@ class Search(lightbulb.SlashCommand, name="imgsearch", description="imgsearch"):
     async def invoke(self, ctx: lightbulb.Context) -> None:
         filter_search_term = predict([self.search_term])
         if filter_search_term > 0.7:
-            await ctx.respond("naughty naughty")
+            await ctx.respond("Please avoid Profanity")
         else:
             img = serch(self.search_term)[1]
             emb = hikari.Embed(timestamp=bot.time()).set_image(img).set_footer(
