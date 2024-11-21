@@ -1,5 +1,6 @@
 import os
 
+import atproto_client.exceptions
 import hikari
 import lightbulb
 from atproto import Client
@@ -29,7 +30,7 @@ avatar = bsclient.me.avatar
 
 
 @loader.command
-class Bsky(lightbulb.SlashCommand, name="blueskypost", description="posts to bsky"):
+class BskyPost(lightbulb.SlashCommand, name="blueskypost", description="posts to bsky"):
     text: str = lightbulb.string("text", "The text to post")
 
     @lightbulb.invoke
@@ -55,3 +56,38 @@ class Bsky(lightbulb.SlashCommand, name="blueskypost", description="posts to bsk
             )
             )
             await ctx.respond(emb)
+
+
+@loader.command
+class BskyFollow(lightbulb.SlashCommand, name="blueskyfollow", description="follow someone on bsky"):
+    user: str = lightbulb.string("user", "the users username")
+
+    @lightbulb.invoke
+    async def invoke(self, ctx: lightbulb.Context) -> None:
+        try:
+            follow = self.user
+
+            profile = bsclient.get_profile(follow)
+            bsclient.follow(profile.did)
+
+            femb = (hikari.Embed(
+                timestamp=bot.time(),
+                title=f"Successfully followed {follow}")
+            .set_author(
+                name=handle,
+                url=f"https://bsky.app/profile/{handle}/follows",
+                icon=avatar
+            )
+            .set_footer(
+                text=f"Requested by {ctx.member.display_name}",
+                icon=ctx.member.avatar_url,
+            )
+            )
+            await ctx.respond(femb)
+        except atproto_client.exceptions.BadRequestError:
+            await ctx.respond(f"Error following user: Profile not Found")
+        except atproto_client.exceptions.RequestException:
+            await ctx.respond("Rate Limited")
+        except Exception as e:
+            await ctx.respond(f"Unexpected error: {str(e)}")
+
