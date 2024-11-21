@@ -28,7 +28,7 @@ loader = lightbulb.Loader()
 handle = bsclient.me.handle
 avatar = bsclient.me.avatar
 
-
+#bsky post command
 @loader.command
 class BskyPost(lightbulb.SlashCommand, name="blueskypost", description="posts to bsky"):
     text: str = lightbulb.string("text", "The text to post")
@@ -58,6 +58,8 @@ class BskyPost(lightbulb.SlashCommand, name="blueskypost", description="posts to
             await ctx.respond(emb)
 
 
+
+#bsky follow command
 @loader.command
 class BskyFollow(lightbulb.SlashCommand, name="blueskyfollow", description="follow someone on bsky"):
     user: str = lightbulb.string("user", "the users username")
@@ -83,6 +85,7 @@ class BskyFollow(lightbulb.SlashCommand, name="blueskyfollow", description="foll
                 icon=ctx.member.avatar_url,
             )
             )
+            #error handling for unfound profile, rate limit, and other
             await ctx.respond(femb)
         except atproto_client.exceptions.BadRequestError:
             await ctx.respond(f"Error following user: Profile not Found")
