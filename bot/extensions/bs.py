@@ -21,7 +21,7 @@ loader = lightbulb.Loader()
 
 
 @loader.command
-class Bsky(lightbulb.SlashCommand, name="bsky", description="posts to bsky"):
+class Bsky(lightbulb.SlashCommand, name="blueskypost", description="posts to bsky"):
     text: str = lightbulb.string("text", "The text to post")
 
     @lightbulb.invoke
@@ -35,8 +35,13 @@ class Bsky(lightbulb.SlashCommand, name="bsky", description="posts to bsky"):
             emb = (hikari.Embed(
             timestamp=bot.time(),
             url = link,
-            title=f"Your post has been posted.").
-            set_footer(
+            title=f"Your post has been posted.")
+            .set_author(
+            name="@botiusmaximus.bsky.social",
+            url="https://bsky.app/profile/botiusmaximus.bsky.social",
+            icon="https://cdn.bsky.app/img/avatar/plain/did:plc:ut64q4bmsk2q2zi4kfkxwdec/bafkreiavv25wovn2e6qol3nyazpraeubsulo6vr5i2w2jgvu5ii6tpvkji@jpeg"
+            )
+            .set_footer(
             text=f"Requested by {ctx.member.display_name}",
             icon=ctx.member.avatar_url,
                 )
