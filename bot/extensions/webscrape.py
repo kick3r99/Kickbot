@@ -1,5 +1,6 @@
 import lightbulb
 from bs4 import BeautifulSoup
+
 import bot
 import requests
 import hikari
@@ -30,9 +31,11 @@ class Search(lightbulb.SlashCommand, name="imgsearch", description="imgsearch"):
         if filter_search_term > 0.7:
             await ctx.respond("Please avoid Profanity")
         else:
+            search_term = self.search_term
             img = serch(self.search_term)[1]
-            emb = hikari.Embed(timestamp=bot.time()).set_image(img).set_footer(
+            emb = (hikari.Embed(timestamp=bot.time(),title=f"Prompt: {search_term}").set_image(img)
+            .set_footer(
                 text=f"Requested by {ctx.member.display_name}",
                 icon=ctx.member.avatar_url,
-            )
+            ))
             await ctx.respond(emb)

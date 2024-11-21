@@ -12,10 +12,8 @@ def time():
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(BASEDIR, '.env'))
 Key = os.getenv("API_KEY")
-
 # Hikari __init__
 bot = hikari.GatewayBot(Key)
-
 # Lightbulb __init__
 client = lightbulb.client_from_app(bot)
 
