@@ -103,7 +103,7 @@ class BskyFollow(lightbulb.SlashCommand, name="blueskyfollow", description="foll
 class BskyFeed(lightbulb.SlashCommand, name="blueskyfeed", description="feed me cookie"):
     @lightbulb.invoke
     async def invoke(self, ctx: lightbulb.Context) -> None:
-        rng = random.randint(0, 50)
+        rng = random.randint(0, 30)
         timeline = bsclient.get_timeline(algorithm='reverse-chronological')
         feed_view = timeline.feed[rng]
         action = '[New post]'

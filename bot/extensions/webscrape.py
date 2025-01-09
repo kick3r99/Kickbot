@@ -1,6 +1,6 @@
 import lightbulb
 from bs4 import BeautifulSoup
-
+import itertools
 import bot
 import requests
 import hikari
@@ -38,4 +38,38 @@ class Search(lightbulb.SlashCommand, name="imgsearch", description="imgsearch"):
                 text=f"Requested by {ctx.member.display_name}",
                 icon=ctx.member.avatar_url,
             ))
+            await ctx.respond(emb)
+
+
+
+
+#reddit
+def getdata(url):
+    r = requests.get(url)
+    return r.text
+
+@loader.command
+class RedditScrape(lightbulb.SlashCommand, name="redditscrape", description="redditscrape"):
+    url = lightbulb.string("redditurl", "paste url here")
+    @lightbulb.invoke
+    async def invoke(self, ctx: lightbulb.Context) -> None:
+        reddit = getdata(self.url)
+        empty = ""
+        red = BeautifulSoup(reddit, 'html.parser')
+
+        for item in red.find_all('div', class_='text-neutral-content'):
+            redfinal = empty + item.get_text()
+            redlist = itertools.batched(redfinal, 1024)
+
+            emb = (hikari.Embed(timestamp=bot.time(), title=f"Reddit Post")
+            .set_footer(
+            text=f"{self.url}",
+            icon=ctx.member.avatar_url,
+            ))
+
+            for i in redlist:
+                emb.add_field(name = "⠀", value = "".join(i), inline = False)
+
+
+
             await ctx.respond(emb)
