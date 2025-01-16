@@ -37,9 +37,11 @@ class BskyPost(lightbulb.SlashCommand, name="blueskypost", description="posts to
 
     @lightbulb.invoke
     async def invoke(self, ctx: lightbulb.Context) -> None:
+        #profanity prevention using profanity_check
         censor_bsky = predict([self.text])
         if censor_bsky > 0.7:
             await ctx.respond("Please avoid Profanity")
+            #post to bluesky with the text, and include an embed with the link to post
         else:
             post = bsclient.send_post(self.text)
             link = f'https://bsky.app/profile/{handle}/post/{post.uri.split('/')[-1]}'
@@ -66,6 +68,7 @@ class BskyPost(lightbulb.SlashCommand, name="blueskypost", description="posts to
 class BskyFollow(lightbulb.SlashCommand, name="blueskyfollow", description="follow someone on bsky"):
     user: str = lightbulb.string("user", "the users username")
 
+#Try to follow user inputted, otherwise output either user not found or rate limited error
     @lightbulb.invoke
     async def invoke(self, ctx: lightbulb.Context) -> None:
         try:
@@ -103,6 +106,7 @@ class BskyFollow(lightbulb.SlashCommand, name="blueskyfollow", description="foll
 class BskyFeed(lightbulb.SlashCommand, name="blueskyfeed", description="feed me cookie"):
     @lightbulb.invoke
     async def invoke(self, ctx: lightbulb.Context) -> None:
+        #choose a numbe between 0 and 30 and grab the post in bot's bs feed related to that number
         rng = random.randint(0, 30)
         timeline = bsclient.get_timeline(algorithm='reverse-chronological')
         feed_view = timeline.feed[rng]
@@ -114,7 +118,7 @@ class BskyFeed(lightbulb.SlashCommand, name="blueskyfeed", description="feed me 
         authorfeed = feed_view.post.author
 
 
-
+#clause incase post has an image
         image_url = None
         post_embed = getattr(post, "embed", None)
         if post_embed:
@@ -125,7 +129,7 @@ class BskyFeed(lightbulb.SlashCommand, name="blueskyfeed", description="feed me 
         raw_timestamp = post.created_at  # ISO 8601 string
         formatted_timestamp = datetime.fromisoformat(raw_timestamp.replace("Z", "+00:00")).strftime(
             "%b %d %Y at %I:%M %p")
-
+        #embed shenanigans
         feemb = (hikari.Embed(
             title = action,
             description=f"{post.text}",

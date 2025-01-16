@@ -26,17 +26,18 @@ class Plot(lightbulb.SlashCommand, name="plot", description="plot data using mat
 
     @lightbulb.invoke
     async def invoke(self, ctx: lightbulb.Context) -> None:
+        #checks for number input
         if not number_pattern.match(self.data1) or not number_pattern.match(self.data2):
             await ctx.respond("Please provide valid number sequences")
             return
 
         data1_numbers = list(map(int, self.data1.split()))
         data2_numbers = list(map(int, self.data2.split()))
-
+        #checks for length of data
         if len(data1_numbers) != len(data2_numbers):
             await ctx.respond("Both datasets must have the same length")
             return
-
+        #tries to plot data, and embed it.
         try:
             plot(data1_numbers, data2_numbers)
             plotimg = hikari.File("data/fig.png")

@@ -8,6 +8,7 @@ from profanity_check import predict
 
 loader = lightbulb.Loader()
 
+#This function searches for the inputted search term and outputs the first image it finds
 def serch(search_term):
     url = "https://www.google.ca/search?q=SearchTerm&tbm=isch"
     url = url.split("SearchTerm")
@@ -20,7 +21,7 @@ def serch(search_term):
         links.append(image_tag['src'])
     return links
 
-
+#img search command here
 @loader.command
 class Search(lightbulb.SlashCommand, name="imgsearch", description="imgsearch"):
     search_term = lightbulb.string("searchterm", "searchterm")
@@ -47,7 +48,7 @@ class Search(lightbulb.SlashCommand, name="imgsearch", description="imgsearch"):
 def getdata(url):
     r = requests.get(url)
     return r.text
-
+#reddiscrape command, atm takes in a reddit link and pastes its contents to discord
 @loader.command
 class RedditScrape(lightbulb.SlashCommand, name="redditscrape", description="redditscrape"):
     url = lightbulb.string("redditurl", "paste url here")

@@ -2,6 +2,7 @@ import lightbulb
 loader = lightbulb.Loader()
 from profanity_check import predict
 
+#Echo command, repeats what user inputted, while checking for profanity
 @loader.command
 class Echo(lightbulb.SlashCommand, name="echo", description="echoes what is inputted"):
     echo = lightbulb.string('echo', 'echoes what is inputted')
@@ -13,7 +14,7 @@ class Echo(lightbulb.SlashCommand, name="echo", description="echoes what is inpu
         else:
             await ctx.respond(self.echo)
 
-
+#Ping command, respond with the user's discord tag
 @loader.command
 class Ping(lightbulb.SlashCommand, name="ping", description="Checks the bot is alive"):
     
