@@ -7,8 +7,8 @@ from mcstatus import  JavaServer
 loader = lightbulb.Loader()
 
 @loader.command
-class McJava(lightbulb.SlashCommand, name="javaservercheck", description="pinganmcserver"):
-    server = lightbulb.string("serverip", "serverip")
+class McJava(lightbulb.SlashCommand, name="java_server_ping", description="pings a java minecraft server"):
+    server = lightbulb.string("serverip", "the servers ip")
     @lightbulb.invoke
     async def invoke(self, ctx: lightbulb.Context) -> None:
         #make this check for specific formatting later

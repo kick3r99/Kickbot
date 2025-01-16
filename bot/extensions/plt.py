@@ -21,8 +21,8 @@ def plot(data1, data2):
 # plot command
 @loader.command
 class Plot(lightbulb.SlashCommand, name="plot", description="plot data using matplotlib. Seperate data using spaces"):
-    data1 = lightbulb.string("firstdataset", "data")
-    data2 = lightbulb.string("seconddataset", "data")
+    data1 = lightbulb.string("first_dataset", "data")
+    data2 = lightbulb.string("second_dataset", "data")
 
     @lightbulb.invoke
     async def invoke(self, ctx: lightbulb.Context) -> None:

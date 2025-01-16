@@ -50,7 +50,7 @@ def getdata(url):
     return r.text
 #reddiscrape command, atm takes in a reddit link and pastes its contents to discord
 @loader.command
-class RedditScrape(lightbulb.SlashCommand, name="redditscrape", description="redditscrape"):
+class RedditScrape(lightbulb.SlashCommand, name="reddit_scrape", description="scrapes a reddit post"):
     url = lightbulb.string("redditurl", "paste url here")
     @lightbulb.invoke
     async def invoke(self, ctx: lightbulb.Context) -> None:

@@ -32,7 +32,7 @@ avatar = bsclient.me.avatar
 
 #bsky post command
 @loader.command
-class BskyPost(lightbulb.SlashCommand, name="blueskypost", description="posts to bsky"):
+class BskyPost(lightbulb.SlashCommand, name="bluesky_post", description="posts to bsky"):
     text: str = lightbulb.string("text", "The text to post")
 
     @lightbulb.invoke
@@ -65,7 +65,7 @@ class BskyPost(lightbulb.SlashCommand, name="blueskypost", description="posts to
 
 #bsky follow command
 @loader.command
-class BskyFollow(lightbulb.SlashCommand, name="blueskyfollow", description="follow someone on bsky"):
+class BskyFollow(lightbulb.SlashCommand, name="bluesky_follow", description="follow someone on bsky"):
     user: str = lightbulb.string("user", "the users username")
 
 #Try to follow user inputted, otherwise output either user not found or rate limited error
@@ -103,7 +103,7 @@ class BskyFollow(lightbulb.SlashCommand, name="blueskyfollow", description="foll
 
 #bsky feed
 @loader.command
-class BskyFeed(lightbulb.SlashCommand, name="blueskyfeed", description="feed me cookie"):
+class BskyFeed(lightbulb.SlashCommand, name="bluesky_feed", description="feed me cookie"):
     @lightbulb.invoke
     async def invoke(self, ctx: lightbulb.Context) -> None:
         #choose a numbe between 0 and 30 and grab the post in bot's bs feed related to that number
