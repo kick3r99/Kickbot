@@ -23,7 +23,7 @@ def serch(search_term):
 
 #img search command here
 @loader.command
-class Search(lightbulb.SlashCommand, name="imgsearch", description="imgsearch"):
+class Search(lightbulb.SlashCommand, name="img_search", description="imgsearch"):
     search_term = lightbulb.string("searchterm", "searchterm")
 
     @lightbulb.invoke
