@@ -6,4 +6,4 @@ atproto==0.0.55
 bs4==0.0.2
 requests==2.32.3
 alt-profanity-check==1.5.2
-
+mcstatus

@@ -74,3 +74,6 @@ class RedditScrape(lightbulb.SlashCommand, name="redditscrape", description="red
 
 
             await ctx.respond(emb)
+
+
+
